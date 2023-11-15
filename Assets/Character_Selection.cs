@@ -8,11 +8,14 @@ public class Character_Selection : MonoBehaviour
 {
     Transform theMan;
 
+    float floatValue;
+
+    [SerializeField]
+    float floatValueValue;
+
     Renderer manColor;
 
     float LerpValue;
-
-    Color theColorWhichManWants;
 
     bool isSelected;
 
@@ -32,7 +35,8 @@ public class Character_Selection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LerpValue = LerpC(1, 3/theMan.transform.localScale.sqrMagnitude, 1);
+        floatValue = floatValueValue * Time.deltaTime;
+        LerpValue = LerpC(0, 3/theMan.transform.localScale.sqrMagnitude, 1);
         manColor.material.color = Color.Lerp(Color.white, initialColor, LerpValue);
         if (Input.GetKeyDown(KeyCode.Z)){
             isSelected = true;
@@ -44,13 +48,13 @@ public class Character_Selection : MonoBehaviour
             CharacterIsSelected();
         }
         if (theMan.transform.localScale.sqrMagnitude > 3 && isSelected == false){
-            theMan.transform.localScale += new Vector3(-0.003f, -0.003f, 0);
+            theMan.transform.localScale += new Vector3(-floatValue, -floatValue, 0);
         }
     }
 
     void CharacterIsSelected(){
         if (theMan.transform.localScale.sqrMagnitude < 4){
-            theMan.transform.localScale += new Vector3(0.003f, 0.003f, 0);
+            theMan.transform.localScale += new Vector3(floatValue, floatValue, 0);
         }
     }
 
