@@ -36,9 +36,9 @@ public class Character_Selection : MonoBehaviour
     void Update()
     {
         floatValue = floatValueValue * Time.deltaTime;
-        LerpValue = LerpC(0, 3/theMan.transform.localScale.sqrMagnitude, 1);
-        manColor.material.color = Color.Lerp(Color.white, initialColor, LerpValue);
-        if (Input.GetKeyDown(KeyCode.Z)){
+        LerpValue = LerpC(3, theMan.transform.localScale.magnitude, 2);
+        manColor.material.color = Color.Lerp(initialColor, Color.white, LerpValue);
+        if (Input.GetKeyDown(KeyCode.Z) && isSelected == false){
             isSelected = true;
         }
         else if (Input.GetKeyDown(KeyCode.X)){
@@ -49,6 +49,9 @@ public class Character_Selection : MonoBehaviour
         }
         if (theMan.transform.localScale.sqrMagnitude > 3 && isSelected == false){
             theMan.transform.localScale += new Vector3(-floatValue, -floatValue, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.Z) && theMan.transform.localScale.sqrMagnitude >= 4 && isSelected == true){
+            Debug.Log("kowabunga let's go");
         }
     }
 
