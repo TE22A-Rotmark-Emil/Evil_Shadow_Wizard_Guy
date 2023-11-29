@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Character_Selection : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class Character_Selection : MonoBehaviour
             theMan.transform.localScale += new Vector3(-floatValue, -floatValue, 0);
         }
         if (Input.GetKeyDown(KeyCode.Z) && theMan.transform.localScale.sqrMagnitude >= 4 && isSelected == true){
-            Debug.Log("kowabunga let's go");
+            SceneManager.LoadScene("World");
         }
     }
 
