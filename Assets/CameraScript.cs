@@ -20,7 +20,9 @@ public class CameraScript : MonoBehaviour
 
     void LateUpdate(){
         Vector3 playerPosition = player.position + cameraOffset;
+
         
+        //add offset +2 -2 so the camera is not focused on the player and only follows them if the player moves outside of +2 -2
         transform.position = Vector3.SmoothDamp(transform.position, playerPosition, ref velocity, timeSmoothing);
     }
 }
