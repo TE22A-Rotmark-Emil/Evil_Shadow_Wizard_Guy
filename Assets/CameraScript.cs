@@ -5,19 +5,22 @@ using UnityEngine.UIElements;
 
 public class CameraScript : MonoBehaviour
 {
-    [SerializeField]
-    GameObject Camera;
+    Vector3 cameraOffset = new(0, 3, -10f);
+
+    float timeSmoothing = 0.25f;
+
+    Vector3 velocity = Vector3.zero;
 
     [SerializeField]
-    GameObject player;
-
-    void Start()
+    Transform player;
+        void Start()
     {
-        
+        Application.targetFrameRate = 120;
     }
 
-    void Update()
-    {
+    void LateUpdate(){
+        Vector3 playerPosition = player.position + cameraOffset;
         
+        transform.position = Vector3.SmoothDamp(transform.position, playerPosition, ref velocity, timeSmoothing);
     }
 }

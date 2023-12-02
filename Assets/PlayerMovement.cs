@@ -1,31 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    float speed = 5;
+    Rigidbody2D rb;
+
+    [SerializeField]
+    float speed;
 
     public bool facingRight = true;
 
+    float moveX;
+
     void Start()
     {
-        
     }
 
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal") * Time.deltaTime;
-
-        Vector2 movement = new(moveX, 0);
-
-        if (transform.position.x > -10){
-            transform.Translate(movement * speed);
-        }
-        if (transform.position.x <= -10){
-            transform.Translate(0.01f, 0, 0);
-        }
+        float moveX = Input.GetAxisRaw("Horizontal") * speed;
 
         if (moveX > 0 && !facingRight){
             Flip();
@@ -33,6 +30,10 @@ public class PlayerMovement : MonoBehaviour
         if (moveX < 0 && facingRight){
             Flip();
         }
+    }
+
+    void FixedUpdate(){
+        rb.velocity = new(moveX * speed, rb.velocity.y);
     }
 
     void Flip(){
