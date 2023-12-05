@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,19 +11,38 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField]
-    float speed;
+    float speed = 3;
+
+    [SerializeField]
+    float cubeSize;
+
+    [SerializeField]
+    Transform groundCheck;
+
+    [SerializeField]
+    float groundRadius = 0.005f;
+
+    [SerializeField]
+    LayerMask groundLayer;
+
+    [SerializeField]
+    Vector2 flightForce = new(0, 0.5f);
+
+    [SerializeField]
+    float flightMeter = 5f;
 
     public bool facingRight = true;
 
     float moveX;
 
+    bool canFly = true;
+
     void Start()
     {
     }
 
-    void Update()
-    {
-        float moveX = Input.GetAxisRaw("Horizontal") * speed;
+    void Update(){
+        moveX = Input.GetAxisRaw("Horizontal");
 
         if (moveX > 0 && !facingRight){
             Flip();
@@ -30,10 +50,27 @@ public class PlayerMovement : MonoBehaviour
         if (moveX < 0 && facingRight){
             Flip();
         }
-    }
 
-    void FixedUpdate(){
-        rb.velocity = new(moveX * speed, rb.velocity.y);
+        Vector3 cubeSize = makeGroundCheckSize();
+
+        bool Grounded = Physics2D.OverlapBox(groundCheck.position, cubeSize, 0);
+
+        if (flightMeter > 0){
+            canFly = true;
+        }
+        else{
+            canFly = false;
+        }
+
+        if (Input.GetButton("Jump") && canFly == true){
+            rb.AddForce(flightForce);
+            flightMeter -= 1*Time.deltaTime;
+            Debug.Log(flightMeter);
+        }
+
+        Vector2 movement = new(moveX, 0);
+
+        transform.Translate(movement * speed * Time.deltaTime);
     }
 
     void Flip(){
@@ -41,5 +78,13 @@ public class PlayerMovement : MonoBehaviour
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         facingRight = !facingRight;
+    }
+
+    private Vector3 makeGroundCheckSize() => new(cubeSize, groundRadius);
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.grey;
+        Vector3 cubeSize = makeGroundCheckSize();
+        Gizmos.DrawWireCube(groundCheck.position, cubeSize);
     }
 }

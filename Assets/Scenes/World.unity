@@ -207,7 +207,8 @@ Transform:
   m_LocalPosition: {x: -8, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1879581157}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &558208894
@@ -281,7 +282,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &558208896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +295,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 250f237eaaa3291468f2fae923f642af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  rb: {fileID: 558208895}
+  speed: 3
+  cubeSize: 0.57
+  groundCheck: {fileID: 1879581157}
+  groundRadius: 0.05
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  flightForce: {x: 0, y: 0.5}
+  flightMeter: 120
   facingRight: 1
 --- !u!1 &1832757659
 GameObject:
@@ -454,6 +464,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1879581156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1879581157}
+  m_Layer: 0
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1879581157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879581156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.897, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 558208893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982115541
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,9 +600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7312e990d1807cd4c8f1c8de4ef41175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: {fileID: 558208893}
-  cameraPosition: {fileID: 1982115544}
-  cameraSpeed: 0
+  player: {fileID: 558208893}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

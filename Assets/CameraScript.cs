@@ -5,7 +5,9 @@ using UnityEngine.UIElements;
 
 public class CameraScript : MonoBehaviour
 {
-    Vector3 cameraOffset = new(0, 3, -10f);
+    Vector3 playerPosition;
+
+    Vector3 cameraOffset = new(0, 3, -7f);
 
     float timeSmoothing = 0.25f;
 
@@ -13,16 +15,18 @@ public class CameraScript : MonoBehaviour
 
     [SerializeField]
     Transform player;
-        void Start()
+    void Start()
     {
-        Application.targetFrameRate = 120;
     }
 
     void LateUpdate(){
-        Vector3 playerPosition = player.position + cameraOffset;
-
+        playerPosition = player.position + cameraOffset;
+        Vector3 playerPosY = new(0, player.position.y, 0);
         
         //add offset +2 -2 so the camera is not focused on the player and only follows them if the player moves outside of +2 -2
+        if (playerPosition.x - cameraOffset.x > 2){
+            
+        }
         transform.position = Vector3.SmoothDamp(transform.position, playerPosition, ref velocity, timeSmoothing);
     }
 }
