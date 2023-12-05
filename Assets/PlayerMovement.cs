@@ -29,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 flightForce = new(0, 0.5f);
 
     [SerializeField]
+    Vector2 jumpForce = new(0, 5f);
+
+    [SerializeField]
     float flightMeter = 5f;
 
     public bool facingRight = true;
@@ -36,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     float moveX;
 
     bool canFly = true;
+
+    bool canJump = false;
 
     void Start()
     {
@@ -55,11 +60,21 @@ public class PlayerMovement : MonoBehaviour
 
         bool Grounded = Physics2D.OverlapBox(groundCheck.position, cubeSize, 0);
 
-        if (flightMeter > 0){
+        if (Grounded == true){
+            canFly = false;
+            canJump = true;
+        }
+        else if (flightMeter > 0 && Grounded == false){
             canFly = true;
+            canJump = false;
         }
         else{
-            canFly = false;
+            canJump = false;
+            canJump = false;
+        }
+
+        if (Input.GetButtonDown("Jump") && canJump == true){
+            rb.AddForce(jumpForce);
         }
 
         if (Input.GetButton("Jump") && canFly == true){
