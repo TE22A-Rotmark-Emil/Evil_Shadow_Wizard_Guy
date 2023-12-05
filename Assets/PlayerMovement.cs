@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         bool Grounded = Physics2D.OverlapBox(groundCheck.position, cubeSize, 0);
 
+        //something about this breaks jumping and flight, will fix later
         if (Grounded == true){
             canFly = false;
             canJump = true;
